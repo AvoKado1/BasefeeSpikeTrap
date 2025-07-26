@@ -179,16 +179,6 @@ I'm applying for the following roles based on this custom implementation:
 
 ---
 
-## 🔗 Addresses
-
-| Name              | Address                |
-|-------------------|-------------------------|
-| Trap Contract     | `0xTRAP_ADDRESS`        |
-| Receiver Contract | `0xRECEIVER_ADDRESS`    |
-| Operator Wallet   | `0xOPERATOR_ADDRESS`    |
-
----
-
 ## 💬 Contact Info
 
 - **Discord**: `@gkutueva`
