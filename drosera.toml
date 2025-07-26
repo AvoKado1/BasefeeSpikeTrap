@@ -1,0 +1,14 @@
+[traps]
+
+[traps.mytrap]
+path = "out/BasefeeSpikeTrap.sol/BasefeeSpikeTrap.json"
+response_contract = "0xYOUR_RECEIVER_CONTRACT"
+response_function = "logGasSpike(string)"
+cooldown_period_blocks = 33
+min_number_of_operators = 1
+max_number_of_operators = 2
+block_sample_size = 10
+private_trap = true
+whitelist = ["0xYOUR_OPERATOR"]
+address = "0xYOUR_TRAP_CONTRACT"
+
