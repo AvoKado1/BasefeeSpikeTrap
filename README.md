@@ -60,10 +60,7 @@ BasefeeSpikeTrap/
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
 
-interface ITrap {
-    function collect() external view returns (bytes memory);
-    function shouldRespond(bytes[] calldata data) external pure returns (bool, bytes memory);
-}
+import "./ITrap.sol";
 
 contract BasefeeSpikeTrap is ITrap {
     uint256 public constant THRESHOLD = 120_000_000; // 0.12 gwei
@@ -73,17 +70,16 @@ contract BasefeeSpikeTrap is ITrap {
     }
 
     function shouldRespond(bytes[] calldata data) external pure override returns (bool, bytes memory) {
-        if (data.length < 2) return (false, "Insufficient data");
+        if (data.length < 2) return (false, bytes(""));
 
         uint256 current = abi.decode(data[0], (uint256));
         uint256 previous = abi.decode(data[1], (uint256));
+
         uint256 diff = current > previous ? current - previous : previous - current;
-
         if (diff >= THRESHOLD) {
-            return (true, abi.encode("Basefee spike detected"));
+            return (true, abi.encode(current, previous));
         }
-
-        return (false, "");
+        return (false, bytes(""));
     }
 }
 ```
@@ -97,10 +93,10 @@ contract BasefeeSpikeTrap is ITrap {
 pragma solidity ^0.8.20;
 
 contract GasAlertReceiver {
-    event GasAlert(string info);
+    event GasAlert(uint256 current, uint256 previous);
 
-    function logGasSpike(string calldata info) external {
-        emit GasAlert(info);
+    function logGasSpike(uint256 current, uint256 previous) external {
+        emit GasAlert(current, previous);
     }
 }
 ```
